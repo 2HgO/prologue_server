@@ -1,0 +1,23 @@
+displayName: Auth Endpoints
+/register:
+  displayName: Register New User
+  post:
+    securedBy: [ null ]
+    is: [ has_conflict_error: { resource: user, field: email }, has_validation_error: { sample_message: "First name is required" } ]
+    displayName: Register New User
+    description: Register a new user
+    body: requests.User
+    responses:
+      201:
+        body: responses.User
+/login:
+  displayName: Login
+  post:
+    securedBy: [ null ]
+    is: [ has_notfound_error: { resource: user }, has_validation_error: { sample_message: "Email is required" } ]
+    displayName: Login
+    description: Sign in into a user's account
+    body: requests.LoginCredentials
+    responses:
+      200:
+        body: responses.AggregateUser

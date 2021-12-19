@@ -1,0 +1,50 @@
+displayName: Categories Endpoints
+/{categoryID}:
+  uriParameters: 
+    categoryID: 
+      type: common.ObjectID
+      description: the id of the category
+  displayName: Category Endpoints
+  delete:
+    displayName: Delete Category
+    is: [ has_token_error, has_notfound_error: { resource: category }, has_validation_error: { sample_message: "invalid object id provided" } ]
+    description: |
+      Delete a category  
+      
+      side effects:
+        - de-references all movies and users with category id in category_ids or like_ids
+    responses:
+      200:
+        body: responses.Category
+  get:
+    displayName: Get Category
+    is: [ has_token_error, has_notfound_error: { resource: category }, has_validation_error: { sample_message: "invalid object id provided" } ]
+    description: Get a category using its ID
+    responses:
+      200:
+        body: responses.Category
+  patch:
+    displayName: Update Category
+    is: [ has_token_error, has_notfound_error: { resource: category }, has_validation_error: { sample_message: "invalid object id provided" } ]
+    description: Update a category using its ID
+    body: requests.UpdateCategory
+    responses:
+      200:
+        body: responses.Category
+post:
+  displayName: Create Category
+  is: [ has_token_error, has_conflict_error: { resource: category, field: name }, has_validation_error: { sample_message: "Name is required" } ]
+  description: Create a category
+  body: requests.Category
+  responses:
+    201:
+      body: responses.Category
+/list:
+  displayName: List Categories
+  get:
+    is: [ has_token_error, has_validation_error: { sample_message: "page cannot be less that 1" }, paginated ]
+    displayName: List Categories
+    description: List categories on the platform
+    responses:
+      200:
+        body: responses.CategoriesAndCount

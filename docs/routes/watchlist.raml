@@ -1,0 +1,37 @@
+displayName: Watchlist Endpoints
+get:
+  displayName: Get User Watchlist
+  description: Get the list of movies in the watchlist of the user the authorization token belongs to
+  is: [ has_token_error, has_validation_error: { sample_message: "page cannot be less that 1" }, paginated ]
+  queryParameters:
+    categories:
+      required: false
+      type: string
+      description: a pipe '|' separated list of category ids to filter the returned list by
+  responses:
+    200:
+      body: responses.AggregateMoviesAndCount
+/{movieID}:
+  uriParameters: 
+    movieID: 
+      type: common.ObjectID
+      description: the id of the movie
+  displayName: User Watchlist Endpoints
+  put:
+    displayName: Add Movie To Watchlist
+    description: Add a movie to the signed in user's watchlist
+    is: [ has_token_error, has_validation_error: { sample_message: "invalid object id provided" }, has_notfound_error: { resource: movie } ]
+    responses:
+      200:
+        body: responses.GenericResponse
+        example:
+          success: true
+  delete:
+    displayName: Remove Movie From Watchlist
+    description: Remove a movie from the signed in user's watchlist
+    is: [ has_token_error, has_validation_error: { sample_message: "invalid object id provided" }, has_notfound_error: { resource: movie } ]
+    responses:
+      200:
+        body: responses.GenericResponse
+        example:
+          success: true

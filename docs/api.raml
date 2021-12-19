@@ -1,0 +1,22 @@
+#%RAML 1.0
+
+uses:
+  requests: types/requests.raml
+  responses: types/responses.raml
+  common: types/common.raml
+
+title: Prologue Server API
+version: v1
+protocols: [ HTTP ]
+mediaType: application/json
+baseUri: http://localhost:55059/{version}
+securedBy: [ bearer_token ]
+
+securitySchemes: !include security.raml
+traits: !include traits/traits.raml
+
+/auth: !include routes/auth.raml
+/categories: !include routes/category.raml
+/movies: !include routes/movie.raml
+/users: !include routes/user.raml
+/watchlists: !include routes/watchlist.raml

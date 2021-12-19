@@ -1,0 +1,53 @@
+#%RAML 1.0 Library
+
+uses:
+  common: common.raml
+
+types:
+  User:
+    type: object
+    properties:
+      fname: string
+      lname: string
+      email: common.EmailAddress
+      password: string
+      dob?: date-only
+      role?: common.Role
+      like_ids?: common.ObjectID[]
+    examples: !include ../examples/requests/user.raml
+  UpdateUser:
+    type: object
+    properties:
+      fname?: string
+      lname?: string
+      like_ids?: common.ObjectID[]
+    examples: !include ../examples/requests/update_user.raml
+  Category:
+    type: object
+    properties:
+      name: string
+      icon?: string
+    examples: !include ../examples/requests/category.raml
+  UpdateCategory:
+    type: object
+    properties:
+      icon?: string
+    examples: !include ../examples/requests/update_category.raml
+  Movie:
+    type: object
+    properties:
+      name: string
+      category_ids?: ObjectID[]
+      release: date-only
+    examples: !include ../examples/requests/movie.raml
+  UpdateMovie:
+    type: object
+    properties:
+      category_ids?: ObjectID[]
+    examples: !include ../examples/requests/update_movie.raml
+  LoginCredentials:
+    type: object
+    properties:
+      email: common.EmailAddress
+      password: string
+    examples: !include ../examples/requests/login_credentials.raml

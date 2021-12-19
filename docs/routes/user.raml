@@ -1,0 +1,50 @@
+displayName: User Endpoints
+get:
+  is: [ has_token_error ]
+  displayName: Get User Details
+  description: Get the details of the user the authorization token belongs to
+  responses:
+    200:
+      body: responses.AggregateUser
+patch:
+  is: [ has_token_error, has_notfound_error: { resource: user } ]
+  displayName: Update User Details
+  description: Update the details of the user the authorization token belongs to
+  body: requests.UpdateUser
+  responses:
+    200:
+      body: responses.User
+delete:
+  is: [ has_token_error, has_notfound_error: { resource: user } ]
+  displayName: Delete User
+  description: Delete the user the authorization token belongs to and their watchlist
+  responses:
+    200:
+      body: responses.AggregateUser
+/list:
+  displayName: List User Details
+  get:
+    is: [ has_token_error, has_validation_error: { sample_message: "page cannot be less that 1" }, paginated ]
+    displayName: List Users Details
+    description: List users on the platform
+    responses:
+      200:
+        body: responses.AggregateUsersAndCount
+/{userID}/watchlist:
+  uriParameters: 
+    userID: 
+      type: common.ObjectID
+      description: the id of the user
+  displayName: List User Watchlist
+  get:
+    is: [ has_token_error, has_validation_error: { sample_message: "page cannot be less that 1" }, has_notfound_error: { resource: user }, paginated ]
+    displayName: List User Watchlist
+    description: List the movies in a user's watchlist
+    queryParameters:
+      categories:
+        required: false
+        type: string
+        description: a pipe '|' separated list of category ids to filter the returned list by
+    responses:
+      200:
+        body: responses.AggregateMoviesAndCount

@@ -1,0 +1,75 @@
+#%RAML 1.0 Library
+
+uses:
+  common: common.raml
+
+types:
+  ResponseBase:
+    type: object
+    properties:
+      id: common.ObjectID
+      created_at: datetime
+      updated_at: datetime
+    examples: !include ../examples/responses/response_base.raml
+  User:
+    type: ResponseBase
+    properties:
+      fname: string
+      lname: string
+      email: common.EmailAddress
+      dob: date-only
+      role: common.Role
+      like_ids: common.ObjectID[]
+    examples: !include ../examples/responses/user.raml
+  AggregateUser:
+    type: User
+    properties:
+      likes: Category[]
+    examples: !include ../examples/responses/aggregate_user.raml
+  AggregateUserAndToken:
+    type: object
+    properties:
+      user: AggregateUser
+      token: string
+    examples: !include ../examples/responses/aggregate_user_and_token.raml
+  AggregateUsersAndCount:
+    type: object
+    properties:
+      users: AggregateUser[]
+      count: integer
+    examples: !include ../examples/responses/aggregate_users_and_count.raml
+  Category:
+    type: ResponseBase
+    properties:
+      name: string
+      icon: string
+    examples: !include ../examples/responses/category.raml
+  CategoriesAndCount:
+    type: object
+    properties:
+      categories: Category[]
+      count: integer
+    examples: !include ../examples/responses/categories_and_count.raml
+  Movie:
+    type: ResponseBase
+    properties:
+      name: string
+      category_ids: ObjectID[]
+      release: date-only
+    examples: !include ../examples/responses/movie.raml
+  AggregateMovie:
+    type: Movie
+    properties:
+      categories: Category[]
+    examples: !include ../examples/responses/aggregate_movie.raml
+  AggregateMoviesAndCount:
+    type: object
+    properties:
+      movies: AggregateMovie[]
+      count: integer
+    examples: !include ../examples/responses/aggregate_movies_and_count.raml
+  GenericResponse:
+    type: object
+    properties:
+      success: boolean
+      message?: string

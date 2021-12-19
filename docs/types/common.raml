@@ -1,0 +1,18 @@
+#%RAML 1.0 Library
+
+types:
+  EmailAddress:
+    type: string
+    minLength: 3
+    maxLength: 320
+    pattern: ^.+@.+\..+$
+    example: oghogho@inflow.finance
+  ObjectID:
+    type: string
+    maxLength: 24
+    minLength: 24
+    pattern: ^[a-fA-F0-9]{24}$
+    example: 61bf4e0e2852d62480c8cacd
+  Role:
+    enum: [ USER, ADMIN ]
+    default: USER

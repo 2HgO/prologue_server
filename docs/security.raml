@@ -1,0 +1,11 @@
+bearer_token:
+  description: Bearer token to authenticate requests to API
+  type: x-bearer-token
+  describedBy: 
+    headers:
+      Authorization:
+        description: Used to send the bearer token
+        type: string
+        required: true
+        pattern: ^Bearer [A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+$
+        example: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJlc2Vvc2FsYTppbmZsb3ciLCJpYXQiOjE2Mzk5MTk0MjEsInVpZCI6IjYxYmVmZmJhNDM5MGZiMmNkMjgzNWNkYiIsIm5hbWUiOiJnb2dvIG9kZW0iLCJleHAiOjE2NDAxNzg2MjEsImF1ZCI6InByb2xvZ3VlOlVTRVIiLCJlbWFpbCI6ImJhYmF5YWdhIn0.DvgvuDQ7wltUufjyRs6B0SuPZPtH0Xchgz7eVgVuDR8CW0IDc26nTAItfU2O3uJ0iw-VXI2yKz3NON_fwL82Zmz6uTB_CBObsfjHhN1hCSnv1Dlbid-0nhpnGGCfo5ZEyBq5trwLrDqcnVS6BTWnX_VFhHUF5p4gVDwS7UjJ7Xk

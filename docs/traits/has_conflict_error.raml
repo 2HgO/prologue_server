@@ -1,0 +1,6 @@
+responses:
+  409:
+    body:
+      type: responses.GenericResponse
+      examples: !include ../examples/responses/conflict_error_response.raml
+    description: a <<resource>> with the same <<field>> as the one sent in the request already exists

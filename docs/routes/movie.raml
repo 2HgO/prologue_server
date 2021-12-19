@@ -1,0 +1,55 @@
+displayName: Movies Endpoints
+/{movieID}:
+  uriParameters: 
+    movieID: 
+      type: common.ObjectID
+      description: the id of the movie
+  displayName: Movie Endpoints
+  delete:
+    displayName: Delete Movie
+    is: [ has_token_error, has_notfound_error: { resource: movie }, has_validation_error: { sample_message: "invalid object id provided" } ]
+    description: |
+      Delete a movie  
+      
+      side effects:
+        - de-references all watchlists with movie id equal to movie_ids
+    responses:
+      200:
+        body: responses.AggregateMovie
+  get:
+    displayName: Get Movie
+    is: [ has_token_error, has_notfound_error: { resource: movie }, has_validation_error: { sample_message: "invalid object id provided" } ]
+    description: Get a movie using its ID
+    responses:
+      200:
+        body: responses.AggregateMovie
+  patch:
+    displayName: Update Movie
+    is: [ has_token_error, has_notfound_error: { resource: movie }, has_validation_error: { sample_message: "invalid object id provided" } ]
+    description: Update a movie using its ID
+    body: requests.UpdateMovie
+    responses:
+      200:
+        body: responses.AggregateMovie
+post:
+  displayName: Create Movie
+  is: [ has_token_error, has_conflict_error: { resource: movie, field: name }, has_validation_error: { sample_message: "Name is required" } ]
+  description: Create a movie
+  body: requests.Movie
+  responses:
+    201:
+      body: responses.Movie
+/list:
+  displayName: List Movies
+  get:
+    is: [ has_token_error, has_validation_error: { sample_message: "page cannot be less that 1" }, paginated ]
+    displayName: List Movies
+    description: List movies on the platform
+    queryParameters:
+      categories:
+        required: false
+        type: string
+        description: a pipe '|' separated list of category ids to filter the returned list by
+    responses:
+      200:
+        body: responses.AggregateMoviesAndCount
